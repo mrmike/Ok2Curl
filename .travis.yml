@@ -1,8 +1,7 @@
 language: android
-jdk: oraclejdk7
-
 android:
-    components:
-        - build-tools-23.0.1
+  components:
+  	- build-tools-23.0.1
+  	- android-23
 
-.script: ./gradlew clean test
+script: ./gradlew clean test
