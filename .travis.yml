@@ -1,7 +1,7 @@
 language: android
 android:
   components:
-  	- build-tools-23.0.1
-  	- android-23
+    - build-tools-23.0.1
+    - android-23
 
 script: ./gradlew clean test
