@@ -8,4 +8,6 @@ android:
   licenses:
     - android-sdk-license-.+
 
-script: ./gradlew clean test
+script:
+    - ./gradlew clean test
+    - ./gradlew clean assemble
