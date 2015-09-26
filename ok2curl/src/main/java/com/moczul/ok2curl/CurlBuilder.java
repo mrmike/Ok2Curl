@@ -5,6 +5,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,8 +45,9 @@ public class CurlBuilder {
     private String getBodyAsString(RequestBody body) {
         try {
             final Buffer sink = new Buffer();
+            final Charset charset = body.contentType().charset(Charset.defaultCharset());
             body.writeTo(sink);
-            return sink.readString(body.contentType().charset());
+            return sink.readString(charset);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
