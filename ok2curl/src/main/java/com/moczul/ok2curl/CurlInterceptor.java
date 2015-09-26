@@ -8,7 +8,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-public class CurlInterceptor implements Interceptor {
+/* package */ class CurlInterceptor implements Interceptor {
 
     private final String tag;
     private final int logLevel;

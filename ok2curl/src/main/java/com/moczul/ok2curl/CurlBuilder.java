@@ -15,7 +15,7 @@ import okio.Buffer;
 
 import static com.moczul.ok2curl.StringUtil.join;
 
-public class CurlBuilder {
+/* package */ class CurlBuilder {
 
     private static final String FORMAT_HEADER = "-H \"%1$s:%2$s\"";
     private static final String FORMAT_METHOD = "-X %1$s";
