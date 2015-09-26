@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,8 +10,10 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <TextView
-        android:text="Hello World!"
+    <Button
+        android:id="@+id/make_request"
+        android:text="@string/make_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-</RelativeLayout>
+
+</FrameLayout>

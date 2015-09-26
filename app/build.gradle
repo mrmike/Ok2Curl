@@ -19,9 +19,23 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
+    compile 'com.github.mrmike:Ok2Curl:v0.0.1'
+
+    /**
+     * Ok2Curl is packed with the latest version of OkHttp. If you already have OkHttp declared in
+     * your dependencies or want to use different version simply add exclude module.
+     *
+     * compile ('com.github.mrmike:Ok2Curl:v0.0.1') {
+     *      exclude module: 'okhttp'
+     * }
+     */
+
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile project(':ok2curl')
 
     testCompile 'junit:junit:4.12'
 }
