@@ -1,1 +1,1 @@
-include ':app', ':ok2curl'
+include ':sample', ':ok2curl'
