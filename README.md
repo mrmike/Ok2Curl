@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.mrmike:Ok2Curl:v0.0.1'
+    compile 'com.github.mrmike:Ok2Curl:0.0.2'
 }
 ```
 
