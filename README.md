@@ -4,7 +4,7 @@ Convert OkHttp requests into curl logs.
 
 ## Usage
 Add library to project dependencies.
-```
+```groovy
 repositories {
     maven { url "https://jitpack.io" }
 }
@@ -15,19 +15,19 @@ dependencies {
 ```
 
 Then call Ok2Curl set method with OkHttpClient as an argument.
-```
+```java
 OkHttpClient client = new OkHttpClient();
 Ok2Curl.set(client);
 ```
 
 By default Ok2Curl generate logs with `Ok2Curl` tag and log level set to`Log.DEBUG`. You can easily change this by calling
-```
+```java
 Ok2Curl.set(client, "MyTag", Log.DEBUG);
 ```
 
 ## Result
 With Ok2Curl set up correctly every executed request will be transformed into curl log e.g.
-```
+```shell
 adb logcat -s "Ok2Curl"
 --------- beginning of main
 --------- beginning of system
