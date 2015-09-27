@@ -9,5 +9,6 @@ android:
     - android-sdk-license-.+
 
 script:
+    - ./gradlew clean install
     - ./gradlew clean test
     - ./gradlew clean assemble
