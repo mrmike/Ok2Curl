@@ -24,7 +24,11 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.mrmike:Ok2Curl:0.0.2'
+    compile project(':ok2curl')
+
+    /**
+     * compile 'com.github.mrmike:Ok2Curl:0.0.2'
+     */
 
     /**
      * Ok2Curl is packed with the latest version of OkHttp. If you already have OkHttp declared in
