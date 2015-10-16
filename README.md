@@ -20,7 +20,7 @@ OkHttpClient client = new OkHttpClient();
 Ok2Curl.set(client);
 ```
 
-By default Ok2Curl generate logs with `Ok2Curl` tag and log level set to`Log.DEBUG`. You can easily change this by calling
+By default Ok2Curl generates logs with `Ok2Curl` tag and log level set to`Log.DEBUG`. You can easily change this by calling
 ```java
 Ok2Curl.set(client, "MyTag", Log.DEBUG);
 ```
@@ -33,7 +33,7 @@ curl -X GET -H "Cache-Control:max-stale=2147483647, only-if-cached" https://api.
 ```
 
 ## Network interceptors
-By default Ok2Curl use application interceptors from OkHttp which is adequate for most cases. But sometimes you may want to use network interceptor e.g. to log Cookies set via [CookieHandler](http://docs.oracle.com/javase/6/docs/api/java/net/CookieHandler.html). In such a case add interceptor the same way as below:  
+By default Ok2Curl uses application interceptors from OkHttp which is adequate for most cases. But sometimes you may want to use network interceptor e.g. to log Cookies set via [CookieHandler](http://docs.oracle.com/javase/6/docs/api/java/net/CookieHandler.html). In such a case add interceptor the same way as below:  
 
 ```
 OkHttpClient okHttp = new OkHttpClient();
