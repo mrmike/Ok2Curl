@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.mrmike:Ok2Curl:0.0.3'
+    compile 'com.github.mrmike:Ok2Curl:0.0.4'
 }
 ```
 
@@ -31,3 +31,13 @@ With Ok2Curl set up correctly every executed request will be transformed into cu
 adb logcat -s "Ok2Curl"
 curl -X GET -H "Cache-Control:max-stale=2147483647, only-if-cached" https://api.github.com/repos/vmg/redcarpet/issues?state=closed
 ```
+
+## Network interceptors
+By default Ok2Curl use application interceptors from OkHttp which is adequate for most cases. But sometimes you may want to use network interceptor e.g. to log Cookies set via [CookieHandler](http://docs.oracle.com/javase/6/docs/api/java/net/CookieHandler.html). In such a case add interceptor the same way as below:  
+
+```
+OkHttpClient okHttp = new OkHttpClient();
+okHttp.networkInterceptors().add(new CurlInterceptor());
+```
+
+To get know more about Interceptor in OkHttp take a look here: https://github.com/square/okhttp/wiki/Interceptors
