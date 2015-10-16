@@ -2,16 +2,23 @@ package com.moczul.ok2curl;
 
 import android.util.Log;
 
+import com.moczul.ok2curl.logger.AndroidLogger;
+import com.moczul.ok2curl.logger.Loggable;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-/* package */ class CurlInterceptor implements Interceptor {
+public class CurlInterceptor implements Interceptor {
 
-    private final String tag;
-    private final int logLevel;
+    private static final String TAG = "Ok2Curl";
+
+    private Loggable logger;
+
+    public CurlInterceptor() {
+        this(TAG, Log.DEBUG);
+    }
 
     /**
      * Interceptor responsible for printing curl logs
@@ -19,8 +26,11 @@ import java.io.IOException;
      * @param logLevel
      */
     public CurlInterceptor(String tag, int logLevel) {
-        this.tag = tag;
-        this.logLevel = logLevel;
+        this.logger = new AndroidLogger(logLevel, tag);
+    }
+
+    /* package */ CurlInterceptor(Loggable logger) {
+        this.logger = logger;
     }
 
     @Override
@@ -29,7 +39,8 @@ import java.io.IOException;
 
         final Request copy = request.newBuilder().build();
         final String curl = new CurlBuilder(copy).build();
-        Log.println(logLevel, tag, curl);
+
+        logger.log(curl);
 
         return chain.proceed(request);
     }
