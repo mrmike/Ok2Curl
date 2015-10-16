@@ -58,6 +58,16 @@ public class CurlBuilderTest {
         assertEquals(expected, command);
     }
 
+    @Test
+    public void postRequest_bodyWithNullMediaType() {
+        final RequestBody body = RequestBody.create(null, "StringBody");
+        final Request request = new Request.Builder().url("http://example.com/").post(body).build();
+        final String command = new CurlBuilder(request).build();
+
+        final String expected = "curl -X POST -d \"StringBody\" http://example.com/";
+        assertEquals(expected, command);
+    }
+
     private RequestBody body() {
         return new FormEncodingBuilder().add("key1", "value1").build();
     }

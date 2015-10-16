@@ -1,6 +1,7 @@
 package com.moczul.ok2curl;
 
 import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 
@@ -32,7 +33,7 @@ import static com.moczul.ok2curl.StringUtil.join;
         this.method = request.method();
         final RequestBody body = request.body();
         if (body != null) {
-            this.contentType = body.contentType().toString();
+            this.contentType = getContentType(body);
             this.body = getBodyAsString(body);
         }
 
@@ -42,15 +43,33 @@ import static com.moczul.ok2curl.StringUtil.join;
         }
     }
 
+    private String getContentType(RequestBody body) {
+        final MediaType mediaType = body.contentType();
+        if (mediaType != null) {
+            return mediaType.toString();
+        }
+
+        return null;
+    }
+
     private String getBodyAsString(RequestBody body) {
         try {
             final Buffer sink = new Buffer();
-            final Charset charset = body.contentType().charset(Charset.defaultCharset());
+            final MediaType mediaType = body.contentType();
+            final Charset charset = getCharset(mediaType);
             body.writeTo(sink);
             return sink.readString(charset);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Charset getCharset(MediaType mediaType) {
+        if (mediaType != null) {
+            return mediaType.charset(Charset.defaultCharset());
+        }
+
+        return Charset.defaultCharset();
     }
 
     public String build() {
@@ -63,8 +82,11 @@ import static com.moczul.ok2curl.StringUtil.join;
             parts.add(headerPart);
         }
 
-        if (body != null) {
+        if (contentType != null) {
             parts.add(String.format(FORMAT_HEADER, "Content-Type", contentType));
+        }
+
+        if (body != null) {
             parts.add(String.format(FORMAT_BODY, body));
         }
 
