@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.mrmike:Ok2Curl:v0.0.1'
+    compile 'com.github.mrmike:Ok2Curl:0.0.2'
 }
 ```
 
@@ -29,7 +29,5 @@ Ok2Curl.set(client, "MyTag", Log.DEBUG);
 With Ok2Curl set up correctly every executed request will be transformed into curl log e.g.
 ```shell
 adb logcat -s "Ok2Curl"
---------- beginning of main
---------- beginning of system
-09-26 21:13:54.380  2225  2725 D Ok2Curl : curl -X GET -H "Cache-Control:max-stale=2147483647, only-if-cached" https://api.github.com/repos/vmg/redcarpet/issues?state=closed
+curl -X GET -H "Cache-Control:max-stale=2147483647, only-if-cached" https://api.github.com/repos/vmg/redcarpet/issues?state=closed
 ```
