@@ -1,9 +1,9 @@
 package com.moczul.ok2curl;
 
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -29,7 +29,7 @@ import static com.moczul.ok2curl.StringUtil.join;
     private Map<String, String> headers = new HashMap<>();
 
     public CurlBuilder(Request request) {
-        this.url = request.urlString();
+        this.url = request.url().toString();
         this.method = request.method();
         final RequestBody body = request.body();
         if (body != null) {
