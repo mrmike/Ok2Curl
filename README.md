@@ -14,15 +14,18 @@ dependencies {
 }
 ```
 
-Then call Ok2Curl set method with OkHttpClient as an argument.
+Then install the Ok2Curl interceptor.
 ```java
-OkHttpClient client = new OkHttpClient();
-Ok2Curl.set(client);
+OkHttpClient okHttp = new OkHttpClient.Builder()
+    .addInterceptor(new CurlInterceptor())
+    .build();
 ```
 
 By default Ok2Curl generates logs with `Ok2Curl` tag and log level set to`Log.DEBUG`. You can easily change this by calling
 ```java
-Ok2Curl.set(client, "MyTag", Log.DEBUG);
+OkHttpClient okHttp = new OkHttpClient.Builder()
+    .addInterceptor(new CurlInterceptor("MyTag", Log.DEBUG))
+    .build();
 ```
 
 ## Result
@@ -36,8 +39,9 @@ curl -X GET -H "Cache-Control:max-stale=2147483647, only-if-cached" https://api.
 By default Ok2Curl uses application interceptors from OkHttp which is adequate for most cases. But sometimes you may want to use network interceptor e.g. to log Cookies set via [CookieHandler](http://docs.oracle.com/javase/6/docs/api/java/net/CookieHandler.html). In such a case add interceptor the same way as below:  
 
 ```
-OkHttpClient okHttp = new OkHttpClient();
-okHttp.networkInterceptors().add(new CurlInterceptor());
+OkHttpClient okHttp = new OkHttpClient.Builder()
+    .addNetworkInterceptor(new CurlInterceptor())
+    .build();
 ```
 
 To get know more about Interceptor in OkHttp take a look here: https://github.com/square/okhttp/wiki/Interceptors

@@ -1,13 +1,13 @@
 package com.moczul.ok2curl;
 
-import com.squareup.okhttp.CacheControl;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.CacheControl;
+import okhttp3.FormBody;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 import static org.junit.Assert.assertEquals;
 
@@ -69,6 +69,6 @@ public class CurlBuilderTest {
     }
 
     private RequestBody body() {
-        return new FormEncodingBuilder().add("key1", "value1").build();
+        return new FormBody.Builder().add("key1", "value1").build();
     }
 }
