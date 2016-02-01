@@ -21,6 +21,7 @@ import static com.moczul.ok2curl.StringUtil.join;
     private static final String FORMAT_HEADER = "-H \"%1$s:%2$s\"";
     private static final String FORMAT_METHOD = "-X %1$s";
     private static final String FORMAT_BODY = "-d '%1$s'";
+    private static final String FORMAT_URL = "\"%1$s\"";
 
     private final String url;
     private String method;
@@ -90,7 +91,7 @@ import static com.moczul.ok2curl.StringUtil.join;
             parts.add(String.format(FORMAT_BODY, body));
         }
 
-        parts.add(url);
+        parts.add(String.format(FORMAT_URL, url));
 
         return join(" ", parts);
     }
