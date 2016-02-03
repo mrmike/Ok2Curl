@@ -59,7 +59,7 @@ public class CurlBuilder {
             body.writeTo(sink);
             return sink.readString(charset);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return "Error while reading body: " + e.toString();
         }
     }
 
