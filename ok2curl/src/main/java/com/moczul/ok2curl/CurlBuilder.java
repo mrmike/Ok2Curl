@@ -60,7 +60,7 @@ import static com.moczul.ok2curl.StringUtil.join;
             body.writeTo(sink);
             return sink.readString(charset);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return "Error while reading body: " + e.toString();
         }
     }
 
