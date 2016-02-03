@@ -20,11 +20,7 @@ public class RequestService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        /**
-         * Alternatively you can specify tag and log level
-         * CurlInterceptor curlInterceptor = new CurlInterceptor("MyTag", Log.DEBUG);
-         */
-        final CurlInterceptor curlInterceptor = new CurlInterceptor();
+        final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger());
 
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(curlInterceptor)

@@ -13,21 +13,19 @@ dependencies {
     // snapshot version
     compile 'com.github.mrmike:Ok2Curl:master-SNAPSHOT'
     // or use specific version
-    compile 'com.github.mrmike:Ok2Curl:0.1.1'
+    compile 'com.github.mrmike:Ok2Curl:0.2.0'
 }
 ```
 
-Then install the Ok2Curl interceptor.
+To start logging requests with Ok2Curl add interceptor to OkHttp client.
 ```java
 OkHttpClient okHttp = new OkHttpClient.Builder()
-    .addInterceptor(new CurlInterceptor())
-    .build();
-```
-
-By default Ok2Curl generates logs with `Ok2Curl` tag and log level set to`Log.DEBUG`. You can easily change this by calling
-```java
-OkHttpClient okHttp = new OkHttpClient.Builder()
-    .addInterceptor(new CurlInterceptor("MyTag", Log.DEBUG))
+    .addInterceptor(new CurlInterceptor(new Loggable() {
+            @Override
+            public void log(String message) {
+                Log.v("Ok2Curl", message);
+            }
+        }))
     .build();
 ```
 
