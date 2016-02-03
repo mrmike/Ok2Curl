@@ -2,8 +2,10 @@ package com.moczul.sample;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.moczul.ok2curl.CurlInterceptor;
+import com.moczul.ok2curl.logger.Loggable;
 
 import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
@@ -19,11 +21,12 @@ public class RequestService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        /**
-         * Alternatively you can specify tag and log level
-         * CurlInterceptor curlInterceptor = new CurlInterceptor("MyTag", Log.DEBUG);
-         */
-        CurlInterceptor curlInterceptor = new CurlInterceptor();
+        CurlInterceptor curlInterceptor = new CurlInterceptor(new Loggable() {
+            @Override
+            public void log(String message) {
+                Log.v("MyTag", message);
+            }
+        });
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(curlInterceptor)
