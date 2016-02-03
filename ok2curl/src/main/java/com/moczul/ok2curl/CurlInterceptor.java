@@ -1,8 +1,5 @@
 package com.moczul.ok2curl;
 
-import android.util.Log;
-
-import com.moczul.ok2curl.logger.AndroidLogger;
 import com.moczul.ok2curl.logger.Loggable;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -17,19 +14,19 @@ public class CurlInterceptor implements Interceptor {
     private Loggable logger;
 
     public CurlInterceptor() {
-        this(TAG, Log.DEBUG);
+        this(new Loggable() {
+            @Override
+            public void log(String message) {
+                System.out.println(TAG + " " + message);
+            }
+        });
     }
 
     /**
      * Interceptor responsible for printing curl logs
-     * @param tag
-     * @param logLevel
+     * @param logger
      */
-    public CurlInterceptor(String tag, int logLevel) {
-        this.logger = new AndroidLogger(logLevel, tag);
-    }
-
-    /* package */ CurlInterceptor(Loggable logger) {
+    public CurlInterceptor(Loggable logger) {
         this.logger = logger;
     }
 
