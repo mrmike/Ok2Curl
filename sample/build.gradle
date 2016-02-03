@@ -34,7 +34,7 @@ dependencies {
      * Ok2Curl is packed with the latest version of OkHttp. If you already have OkHttp declared in
      * your dependencies or want to use different version simply add exclude module.
      *
-     * compile ('com.github.mrmike:Ok2Curl:0.1.1') {
+     * compile ('com.github.mrmike:Ok2Curl:master-SNAPSHOT') {
      *      exclude module: 'okhttp'
      * }
      */
