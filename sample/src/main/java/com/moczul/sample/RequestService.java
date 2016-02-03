@@ -5,13 +5,14 @@ import android.content.Intent;
 
 import com.moczul.ok2curl.CurlInterceptor;
 
-import okhttp3.CacheControl;
+import java.io.IOException;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-import java.io.IOException;
-
 public class RequestService extends IntentService {
+
+    public static final String REQUEST_TYPE = "request_type";
 
     public RequestService() {
         super("RequestService");
@@ -23,16 +24,14 @@ public class RequestService extends IntentService {
          * Alternatively you can specify tag and log level
          * CurlInterceptor curlInterceptor = new CurlInterceptor("MyTag", Log.DEBUG);
          */
-        CurlInterceptor curlInterceptor = new CurlInterceptor();
+        final CurlInterceptor curlInterceptor = new CurlInterceptor();
 
-        OkHttpClient client = new OkHttpClient.Builder()
+        final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(curlInterceptor)
                 .build();
 
-        Request request = new Request.Builder()
-                .url("https://api.github.com/repos/vmg/redcarpet/issues?state=closed")
-                .cacheControl(CacheControl.FORCE_CACHE)
-                .build();
+        final String requestType = intent.getStringExtra(REQUEST_TYPE);
+        final Request request = RequestFactory.getRequest(requestType);
 
         try {
             /**
@@ -43,4 +42,5 @@ public class RequestService extends IntentService {
             e.printStackTrace();
         }
     }
+
 }
