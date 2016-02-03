@@ -1,10 +1,5 @@
 package com.moczul.ok2curl;
 
-import okhttp3.Headers;
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -12,11 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okio.Buffer;
 
 import static com.moczul.ok2curl.StringUtil.join;
 
-/* package */ class CurlBuilder {
+public class CurlBuilder {
 
     private static final String FORMAT_HEADER = "-H \"%1$s:%2$s\"";
     private static final String FORMAT_METHOD = "-X %1$s";
