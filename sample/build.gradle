@@ -27,7 +27,7 @@ dependencies {
     compile project(':ok2curl')
 
     /**
-     * compile 'com.github.mrmike:Ok2Curl:0.1.1'
+     * compile 'com.github.mrmike:Ok2Curl:master-SNAPSHOT'
      */
 
     /**

@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    compile 'com.github.mrmike:Ok2Curl:master-SNAPSHOT'
+    // or 
     compile 'com.github.mrmike:Ok2Curl:0.1.1'
 }
 ```
