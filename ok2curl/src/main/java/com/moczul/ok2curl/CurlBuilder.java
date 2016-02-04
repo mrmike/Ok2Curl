@@ -12,6 +12,8 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okio.Buffer;
+import okio.BufferedSink;
+import okio.Okio;
 
 import static com.moczul.ok2curl.StringUtil.join;
 
@@ -28,12 +30,16 @@ public class CurlBuilder {
     private Map<String, String> headers = new HashMap<>();
 
     public CurlBuilder(Request request) {
+        this(request, -1L);
+    }
+
+    public CurlBuilder(Request request, long limit) {
         this.url = request.url().toString();
         this.method = request.method();
         final RequestBody body = request.body();
         if (body != null) {
             this.contentType = getContentType(body);
-            this.body = getBodyAsString(body);
+            this.body = getBodyAsString(body, limit);
         }
 
         final Headers headers = request.headers();
@@ -51,12 +57,21 @@ public class CurlBuilder {
         return null;
     }
 
-    private String getBodyAsString(RequestBody body) {
+    private String getBodyAsString(RequestBody body, long limit) {
         try {
             final Buffer sink = new Buffer();
+
             final MediaType mediaType = body.contentType();
             final Charset charset = getCharset(mediaType);
-            body.writeTo(sink);
+
+            if (limit > 0) {
+                final BufferedSink buffer = Okio.buffer(new LimitedSink(sink, limit));
+                body.writeTo(buffer);
+                buffer.flush();
+            } else {
+                body.writeTo(sink);
+            }
+
             return sink.readString(charset);
         } catch (IOException e) {
             return "Error while reading body: " + e.toString();
