@@ -31,17 +31,17 @@ repositories {
 }
 
 dependencies {
-    compile project(':Ok2Curl')
+    compile project(':ok2curl')
 
     /**
-     * compile 'com.github.mrmike:Ok2Curl:master-SNAPSHOT'
+     * compile 'com.github.mrmike:ok2curl:master-SNAPSHOT'
      */
 
     /**
      * Ok2Curl is packed with the latest version of OkHttp. If you already have OkHttp declared in
      * your dependencies or want to use different version simply add exclude module.
      *
-     * compile ('com.github.mrmike:Ok2Curl:master-SNAPSHOT') {
+     * compile ('com.github.mrmike:ok2curl:master-SNAPSHOT') {
      *      exclude module: 'okhttp'
      * }
      */

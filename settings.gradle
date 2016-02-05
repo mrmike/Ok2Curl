@@ -1,1 +1,1 @@
-include ':sample', ':Ok2Curl'
+include ':sample', ':ok2curl'
