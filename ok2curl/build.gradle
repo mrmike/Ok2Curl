@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 
 group='com.github.mrmike'
 version='0.2.1'
