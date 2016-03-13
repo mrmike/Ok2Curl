@@ -1,4 +1,4 @@
-# Ok2Curl [![Build Status](https://travis-ci.org/mrmike/Ok2Curl.svg)](https://travis-ci.org/mrmike/Ok2Curl) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Ok2Curl-green.svg?style=flat)](https://android-arsenal.com/details/1/2653)
+# Ok2Curl [![Build Status](https://travis-ci.org/mrmike/Ok2Curl.svg)](https://travis-ci.org/mrmike/Ok2Curl) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Ok2Curl-green.svg?style=flat)](https://android-arsenal.com/details/1/2653) [![Release](https://jitpack.io/v/mrmike/Ok2Curl.svg)](https://jitpack.io/#mrmike/Ok2Curl)
 
 Convert OkHttp requests into curl logs.
 
