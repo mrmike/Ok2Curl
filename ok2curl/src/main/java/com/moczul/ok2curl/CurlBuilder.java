@@ -22,6 +22,7 @@ public class CurlBuilder {
     private static final String FORMAT_HEADER = "-H \"%1$s:%2$s\"";
     private static final String FORMAT_METHOD = "-X %1$s";
     private static final String FORMAT_BODY = "-d '%1$s'";
+    private static final String CONTENT_TYPE = "Content-Type";
 
     private final String url;
     private String method;
@@ -96,8 +97,8 @@ public class CurlBuilder {
             parts.add(headerPart);
         }
 
-        if (contentType != null) {
-            parts.add(String.format(FORMAT_HEADER, "Content-Type", contentType));
+        if (contentType != null && !headers.containsKey(CONTENT_TYPE)) {
+            parts.add(String.format(FORMAT_HEADER, CONTENT_TYPE, contentType));
         }
 
         if (body != null) {
