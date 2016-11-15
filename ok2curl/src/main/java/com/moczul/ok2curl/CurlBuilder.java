@@ -96,7 +96,7 @@ public class CurlBuilder {
             parts.add(headerPart);
         }
 
-        if (contentType != null && !headers.containsKey(CONTENT_TYPE)) {
+        if (contentType != null && !containsName(CONTENT_TYPE, headers)) {
             parts.add(String.format(FORMAT_HEADER, CONTENT_TYPE, contentType));
         }
 
@@ -107,5 +107,15 @@ public class CurlBuilder {
         parts.add(url);
 
         return join(" ", parts);
+    }
+
+    private boolean containsName(String name, List<Header> headers) {
+        for (Header header : headers) {
+            if (header.name().equals(name)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
