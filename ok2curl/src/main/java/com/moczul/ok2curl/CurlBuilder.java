@@ -3,9 +3,8 @@ package com.moczul.ok2curl;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -28,7 +27,7 @@ public class CurlBuilder {
     private String method;
     private String contentType;
     private String body;
-    private Map<String, String> headers = new HashMap<>();
+    private List<Header> headers = new LinkedList<>();
 
     public CurlBuilder(Request request) {
         this(request, -1L);
@@ -45,7 +44,7 @@ public class CurlBuilder {
 
         final Headers headers = request.headers();
         for (int i = 0; i < headers.size(); i++) {
-            this.headers.put(headers.name(i), headers.value(i));
+            this.headers.add(new Header(headers.name(i), headers.value(i)));
         }
     }
 
@@ -92,8 +91,8 @@ public class CurlBuilder {
         parts.add("curl");
         parts.add(String.format(FORMAT_METHOD, method.toUpperCase()));
 
-        for (String key : headers.keySet()) {
-            final String headerPart = String.format(FORMAT_HEADER, key, headers.get(key));
+        for (Header header : headers) {
+            final String headerPart = String.format(FORMAT_HEADER, header.name(), header.value());
             parts.add(headerPart);
         }
 
