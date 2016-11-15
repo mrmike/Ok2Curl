@@ -3,8 +3,8 @@ jdk:
     - oraclejdk8
 android:
   components:
-    - build-tools-25
-    - android-25
+    - build-tools-24
+    - android-24
     - extra-android-m2repository
 
   licenses:
