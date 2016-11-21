@@ -11,9 +11,9 @@ repositories {
 
 dependencies {
     // snapshot version
-    compile 'com.github.mrmike:ok2curl:master-SNAPSHOT'
+    compile 'com.github.mrmike:Ok2Curl:master-SNAPSHOT'
     // or use specific version
-    compile 'com.github.mrmike:ok2curl:0.3.0'
+    compile 'com.github.mrmike:Ok2Curl:0.3.0'
 }
 ```
 
