@@ -7,6 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.moczul.ok2curl.CurlBuilder;
+import com.moczul.ok2curl.modifier.HeaderModifier;
+import com.moczul.sample.modifier.Base64Decoder;
+import com.moczul.sample.modifier.BasicAuthorizationHeaderModifier;
+
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.get_request).setOnClickListener(this);
         findViewById(R.id.post_request).setOnClickListener(this);
+        findViewById(R.id.get_request_modified).setOnClickListener(this);
     }
 
     private void sendRequest(String type) {
@@ -31,7 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void displayCurlLog(String type) {
-        final String curl = new CurlBuilder(RequestFactory.getRequest(type)).build();
+        final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
+        final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList(modifier);
+
+        final String curl = new CurlBuilder(RequestFactory.getRequest(type), -1L, modifiers).build();
         curlLog.setText(curl);
     }
 
@@ -45,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.post_request:
                 sendRequest(RequestFactory.TYPE_POST);
                 displayCurlLog(RequestFactory.TYPE_POST);
+                break;
+            case R.id.get_request_modified:
+                sendRequest(RequestFactory.TYPE_GET_MODIFIED);
+                displayCurlLog(RequestFactory.TYPE_GET_MODIFIED);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid view id");
