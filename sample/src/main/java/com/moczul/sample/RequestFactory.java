@@ -9,6 +9,7 @@ public class RequestFactory {
 
     public static final String TYPE_GET = "type_get";
     public static final String TYPE_POST = "type_post";
+    public static final String TYPE_GET_MODIFIED = "type_get_modified";
 
     private static final String NEW_REPO_BODY = "{" +
             "  \"name\": \"Hello-World\"," +
@@ -34,12 +35,21 @@ public class RequestFactory {
                 .build();
     }
 
+    public static Request modifiedGetRequest() {
+        return new Request.Builder()
+                .url("https://api.github.com/repos/vmg/redcarpet/issues?state=closed")
+                .header("Authorization", "Basic bWFjaWVrOnRham5laGFzbG8xMjM=")
+                .build();
+    }
+
     public static Request getRequest(String type) {
         switch (type) {
             case TYPE_GET:
                 return sampleGetRequest();
             case TYPE_POST:
                 return samplePostRequest();
+            case TYPE_GET_MODIFIED:
+                return modifiedGetRequest();
             default:
                 throw new IllegalArgumentException("Invalid request type");
         }

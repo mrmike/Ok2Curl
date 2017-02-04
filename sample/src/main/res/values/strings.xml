@@ -2,5 +2,6 @@
     <string name="app_name">Sample</string>
     <string name="sample_get_request">Sample GET request</string>
     <string name="sample_post_request">Sample POST request</string>
+    <string name="modified_get_request">Get request with modified header</string>
     <string name="curl_log">Curl log</string>
 </resources>

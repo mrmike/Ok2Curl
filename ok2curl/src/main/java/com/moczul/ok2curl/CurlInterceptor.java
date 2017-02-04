@@ -1,33 +1,24 @@
 package com.moczul.ok2curl;
 
 import com.moczul.ok2curl.logger.Loggable;
+import com.moczul.ok2curl.modifier.HeaderModifier;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.io.IOException;
-
 public class CurlInterceptor implements Interceptor {
 
-    private static final String TAG = "Ok2Curl";
     private static final long DEFAULT_LIMIT = 1024L * 1024L;
 
     private final Loggable logger;
     private final long limit;
-
-    /**
-     * Interceptor responsible for printing curl logs
-     *
-     * Logs are pushed to stdout with 1MB limit
-     */
-    public CurlInterceptor() {
-        this(new Loggable() {
-            @Override
-            public void log(String message) {
-                System.out.println(TAG + " " + message);
-            }
-        });
-    }
+    private final List<HeaderModifier> headerModifiers = new ArrayList<>();
 
     /**
      * Interceptor responsible for printing curl logs
@@ -37,7 +28,17 @@ public class CurlInterceptor implements Interceptor {
      * @param logger output of logging
      */
     public CurlInterceptor(Loggable logger) {
-        this(logger, DEFAULT_LIMIT);
+        this(logger, DEFAULT_LIMIT, Collections.<HeaderModifier>emptyList());
+    }
+
+    /**
+     * Interceptor responsible for printing curl logs
+     *
+     * @param logger output of logging
+     * @param headerModifiers list of header modifiers
+     */
+    public CurlInterceptor(Loggable logger, List<HeaderModifier> headerModifiers) {
+        this(logger, DEFAULT_LIMIT, headerModifiers);
     }
 
     /**
@@ -47,8 +48,19 @@ public class CurlInterceptor implements Interceptor {
      * @param limit limit maximal bytes logged, if negative - non limited
      */
     public CurlInterceptor(Loggable logger, long limit) {
+        this(logger, limit, Collections.<HeaderModifier>emptyList());
+    }
+
+    /**
+     *  Interceptor responsible for printing curl logs
+     * @param logger output of logging
+     * @param limit limit maximal bytes logged, if negative - non limited
+     * @param headerModifiers list of header modifiers
+     */
+    public CurlInterceptor(Loggable logger, long limit, List<HeaderModifier> headerModifiers) {
         this.logger = logger;
         this.limit = limit;
+        this.headerModifiers.addAll(headerModifiers);
     }
 
     @Override
@@ -56,7 +68,7 @@ public class CurlInterceptor implements Interceptor {
         final Request request = chain.request();
 
         final Request copy = request.newBuilder().build();
-        final String curl = new CurlBuilder(copy, limit).build();
+        final String curl = new CurlBuilder(copy, limit, headerModifiers).build();
 
         logger.log(curl);
 

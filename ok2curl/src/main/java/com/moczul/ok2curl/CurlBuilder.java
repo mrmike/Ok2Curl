@@ -1,8 +1,11 @@
 package com.moczul.ok2curl;
 
+import com.moczul.ok2curl.modifier.HeaderModifier;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,10 +33,10 @@ public class CurlBuilder {
     private List<Header> headers = new LinkedList<>();
 
     public CurlBuilder(Request request) {
-        this(request, -1L);
+        this(request, -1L, Collections.<HeaderModifier>emptyList());
     }
 
-    public CurlBuilder(Request request, long limit) {
+    public CurlBuilder(Request request, long limit, List<HeaderModifier> headerModifiers) {
         this.url = request.url().toString();
         this.method = request.method();
         final RequestBody body = request.body();
@@ -44,8 +47,22 @@ public class CurlBuilder {
 
         final Headers headers = request.headers();
         for (int i = 0; i < headers.size(); i++) {
-            this.headers.add(new Header(headers.name(i), headers.value(i)));
+            final Header header = new Header(headers.name(i), headers.value(i));
+            final Header modifiedHeader = modifyHeader(header, headerModifiers);
+            if (modifiedHeader != null) {
+                this.headers.add(modifiedHeader);
+            }
         }
+    }
+
+    private Header modifyHeader(Header header, List<HeaderModifier> headerModifiers) {
+        for (HeaderModifier modifier : headerModifiers) {
+            if (modifier.matches(header)) {
+                return modifier.modify(header);
+            }
+        }
+
+        return header;
     }
 
     private String getContentType(RequestBody body) {

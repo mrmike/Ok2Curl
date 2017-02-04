@@ -22,6 +22,12 @@
         android:layout_height="wrap_content"
         android:text="@string/sample_post_request" />
 
+    <Button
+        android:id="@+id/get_request_modified"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/modified_get_request" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
