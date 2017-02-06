@@ -51,10 +51,10 @@ To get know more about Interceptor in OkHttp take a look here: https://github.co
 Ok2Curl allows you to modify any header before creating curl command. All you have to do is create your own modifier that implements [HeaderModifier](https://github.com/mrmike/Ok2Curl/blob/master/ok2curl/src/main/java/com/moczul/ok2curl/modifier/HeaderModifier.java) 
 and add this modifier to CurlInterceptor. See [sample](https://github.com/mrmike/Ok2Curl/blob/master/sample/src/main/java/com/moczul/sample/RequestService.java) for reference.
 ```
-        final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
-        final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList(modifier);
+final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
+final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList(modifier);
 
-        final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger(), modifiers);
+final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger(), modifiers);
 ```
 
 ## License
