@@ -105,7 +105,7 @@ public class CurlBuilder {
 
     public String build() {
         List<String> parts = new ArrayList<>();
-        parts.add("curl");
+        parts.add("curl -i");
         parts.add(String.format(FORMAT_METHOD, method.toUpperCase()));
 
         for (Header header : headers) {
