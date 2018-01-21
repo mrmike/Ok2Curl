@@ -13,7 +13,7 @@ dependencies {
     // snapshot version
     compile 'com.github.mrmike:Ok2Curl:master-SNAPSHOT'
     // or use specific version
-    compile 'com.github.mrmike:Ok2Curl:0.3.1'
+    compile 'com.github.mrmike:Ok2Curl:0.4.0'
 }
 ```
 
@@ -57,9 +57,34 @@ final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList
 final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger(), modifiers);
 ```
 
+## Options
+Ok2Curl supports basic Curl options. In order to use options use the following code:
+```
+final Options options = Options.builder()
+                .insecure()
+                .connectTimeout(120)
+                .retry(5)
+                .build();
+
+final CurlInterceptor interceptor = new CurlInterceptor(logger, options);
+```
+Since now every Curl command will start with `curl --insecure --connect-timeout 120 --retry 5...`
+
+### Supported options
+* --insecure
+* --max-time seconds
+* --connect-timeout seconds
+* --retry num
+* --compressed
+* --location
+
+If would like to support any new options please feel free to open PR. Full list of curl options is
+available [here](https://curl.haxx.se/docs/manpage.html).
+
+
 ## License
 
-    Copyright 2015 Michał Moczulski
+    Copyright 2018 Michał Moczulski
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
