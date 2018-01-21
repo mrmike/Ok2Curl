@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.moczul.ok2curl.CurlBuilder;
+import com.moczul.ok2curl.Options;
 import com.moczul.ok2curl.modifier.HeaderModifier;
 import com.moczul.sample.modifier.Base64Decoder;
 import com.moczul.sample.modifier.BasicAuthorizationHeaderModifier;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        curlLog = (TextView) findViewById(R.id.curl_log);
+        curlLog = findViewById(R.id.curl_log);
 
         findViewById(R.id.get_request).setOnClickListener(this);
         findViewById(R.id.post_request).setOnClickListener(this);
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
         final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList(modifier);
 
-        final String curl = new CurlBuilder(RequestFactory.getRequest(type), -1L, modifiers).build();
+        final String curl = new CurlBuilder(RequestFactory.getRequest(type), -1L, modifiers, Options.EMPTY).build();
         curlLog.setText(curl);
     }
 

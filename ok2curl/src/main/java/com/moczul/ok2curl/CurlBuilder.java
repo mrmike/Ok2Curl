@@ -30,15 +30,17 @@ public class CurlBuilder {
     private String method;
     private String contentType;
     private String body;
+    private List<String> options;
     private List<Header> headers = new LinkedList<>();
 
     public CurlBuilder(Request request) {
-        this(request, -1L, Collections.<HeaderModifier>emptyList());
+        this(request, -1L, Collections.<HeaderModifier>emptyList(), Options.EMPTY);
     }
 
-    public CurlBuilder(Request request, long limit, List<HeaderModifier> headerModifiers) {
+    public CurlBuilder(Request request, long limit, List<HeaderModifier> headerModifiers, Options options) {
         this.url = request.url().toString();
         this.method = request.method();
+        this.options = new ArrayList<>(options.list());
         final RequestBody body = request.body();
         if (body != null) {
             this.contentType = getContentType(body);
@@ -106,6 +108,7 @@ public class CurlBuilder {
     public String build() {
         List<String> parts = new ArrayList<>();
         parts.add("curl");
+        parts.addAll(options);
         parts.add(String.format(FORMAT_METHOD, method.toUpperCase()));
 
         for (Header header : headers) {

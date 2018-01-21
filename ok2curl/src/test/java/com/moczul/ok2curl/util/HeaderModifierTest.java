@@ -2,6 +2,7 @@ package com.moczul.ok2curl.util;
 
 import com.moczul.ok2curl.CurlBuilder;
 import com.moczul.ok2curl.Header;
+import com.moczul.ok2curl.Options;
 import com.moczul.ok2curl.modifier.HeaderModifier;
 
 import org.junit.Test;
@@ -42,33 +43,33 @@ public class HeaderModifierTest {
     };
 
     @Test
-    public void curlCommand_shouldContains_modifiedHeader() throws Exception {
+    public void curlCommand_shouldContains_modifiedHeader() {
         final Request request = new Request.Builder()
                 .url("http://example.com/")
                 .header("Cookie", "FIRST=foo")
                 .build();
 
         final List<HeaderModifier> modifiers = Collections.singletonList(cookieHeaderModifier);
-        final String command = new CurlBuilder(request, -1L, modifiers).build();
+        final String command = new CurlBuilder(request, -1L, modifiers, Options.EMPTY).build();
 
         assertEquals("curl -X GET -H \"Cookie:modifiedCookieValue\" http://example.com/", command);
     }
 
     @Test
-    public void curlCommand_shouldNotBeModified_ifDoesNotContainMatchingHeader() throws Exception {
+    public void curlCommand_shouldNotBeModified_ifDoesNotContainMatchingHeader() {
         final Request request = new Request.Builder()
                 .url("http://example.com/")
                 .header("Accept", "application/json")
                 .build();
         final List<HeaderModifier> modifiers = Collections.singletonList(cookieHeaderModifier);
 
-        final String command = new CurlBuilder(request, -1L, modifiers).build();
+        final String command = new CurlBuilder(request, -1L, modifiers, Options.EMPTY).build();
 
         assertEquals("curl -X GET -H \"Accept:application/json\" http://example.com/", command);
     }
 
     @Test
-    public void curlCommand_shouldNotContainsAnyHeaders_forNullHeaderModifier() throws Exception {
+    public void curlCommand_shouldNotContainsAnyHeaders_forNullHeaderModifier() {
         final Request request = new Request.Builder()
                 .url("http://example.com/")
                 .header("Cookie", "FIRST=foo")
@@ -76,7 +77,7 @@ public class HeaderModifierTest {
                 .build();
 
         final List<HeaderModifier> modifiers = Collections.singletonList(nullHeaderModifier);
-        final String command = new CurlBuilder(request, -1L, modifiers).build();
+        final String command = new CurlBuilder(request, -1L, modifiers, Options.EMPTY).build();
 
         assertEquals(command, "curl -X GET http://example.com/", command);
     }
