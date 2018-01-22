@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':ok2curl')
+    implementation project(':ok2curl')
 
     /**
      * compile 'com.github.mrmike:ok2curl:master-SNAPSHOT'
@@ -46,8 +46,8 @@ dependencies {
      * }
      */
 
-    compile 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.10.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
 }
