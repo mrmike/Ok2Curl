@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
 
 group='com.github.mrmike'
 version='0.4.0'
@@ -28,4 +30,33 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            group='com.github.mrmike'
+            artifactId 'ok2curl'
+            version='0.4.0'
+
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['mavenJava']
+    pkg {
+        repo = 'mrmike'
+        name = 'Ok2Curl'
+        desc = 'Convert OkHttp requests into curl logs.'
+        websiteUrl = 'https://github.com/mrmike/Ok2Curl'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/mrmike/Ok2Curl.git'
+        labels = ['android', 'OkHttp', 'curl']
+    }
 }
