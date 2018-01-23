@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group='com.github.mrmike'
-version='0.4.0'
+version='0.4.1'
 
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
@@ -32,31 +32,31 @@ artifacts {
     archives javadocJar
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            group='com.github.mrmike'
-            artifactId 'ok2curl'
-            version='0.4.0'
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'ok2curl'
 
-            artifact sourcesJar
-            artifact javadocJar
-        }
-    }
+    publishedGroupId = 'com.github.mrmike'
+    libraryName = 'Ok2Curl'
+    artifact = 'ok2curl'
+
+    libraryDescription = 'Convert OkHttp requests into curl logs.'
+
+    siteUrl = 'https://github.com/mrmike/Ok2Curl'
+    gitUrl = 'https://github.com/mrmike/Ok2Curl.git'
+
+    libraryVersion = '0.4.1'
+
+    developerId = 'mrmike'
+    developerName = 'Michał Moczulski'
+    developerEmail = 'moczul@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['mavenJava']
-    pkg {
-        repo = 'mrmike'
-        name = 'Ok2Curl'
-        desc = 'Convert OkHttp requests into curl logs.'
-        websiteUrl = 'https://github.com/mrmike/Ok2Curl'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/mrmike/Ok2Curl.git'
-        labels = ['android', 'OkHttp', 'curl']
-    }
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
 }
