@@ -17,46 +17,62 @@ dependencies {
     testCompile 'com.squareup.okhttp3:mockwebserver:3.9.1'
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'jar'
+                groupId 'com.github.mrmike'
+                artifactId 'ok2curl'
+
+                name 'Ok2Curl'
+                description 'Convert OkHttp requests into curl logs.'
+                url 'https://github.com/mrmike/Ok2Curl'
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'mrmike'
+                        name 'Michał Moczulski'
+                        email 'moczul@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/mrmike/Ok2Curl.git'
+                    developerConnection 'https://github.com/mrmike/Ok2Curl.git'
+                    url 'https://github.com/mrmike/Ok2Curl'
+
+                }
+            }
+        }
+    }
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
 
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'ok2curl'
-
-    publishedGroupId = 'com.github.mrmike'
-    libraryName = 'Ok2Curl'
-    artifact = 'ok2curl'
-
-    libraryDescription = 'Convert OkHttp requests into curl logs.'
-
-    siteUrl = 'https://github.com/mrmike/Ok2Curl'
-    gitUrl = 'https://github.com/mrmike/Ok2Curl.git'
-
-    libraryVersion = '0.4.1'
-
-    developerId = 'mrmike'
-    developerName = 'Michał Moczulski'
-    developerEmail = 'moczul@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
-if (project.rootProject.file('local.properties').exists()) {
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'ok2curl'
+        desc = 'Convert OkHttp requests into curl logs.'
+        websiteUrl = 'https://github.com/mrmike/Ok2Curl'
+        vcsUrl = 'https://github.com/mrmike/Ok2Curl.git'
+        licenses = ["Apache-2.0"]
+        publish = true
+        publicDownloadNumbers = false
+        version {
+            desc = 'Convert OkHttp requests into curl logs.'
+            gpg {
+                sign = true
+                passphrase = System.getenv("BINTRAY_GPG_PASS")
+            }
+        }
+    }
 }
