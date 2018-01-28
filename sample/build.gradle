@@ -32,10 +32,9 @@ repositories {
 
 dependencies {
     implementation project(':ok2curl')
-    implementation 'com.github.mrmike:ok2curl:0.4.1'
 
     /**
-     * implementation 'com.github.mrmike:ok2curl:0.4.1'
+     * implementation 'com.github.mrmike:ok2curl:0.4.2'
      */
 
     /**

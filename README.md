@@ -6,14 +6,12 @@ Convert OkHttp requests into curl logs.
 Add library to project dependencies.
 ```groovy
 repositories {
-    maven { url "https://jitpack.io" }
+    jcenter()
 }
 
 dependencies {
-    // snapshot version
-    compile 'com.github.mrmike:Ok2Curl:master-SNAPSHOT'
     // or use specific version
-    compile 'com.github.mrmike:Ok2Curl:0.4.0'
+    compile 'com.github.mrmike:Ok2Curl:0.4.2'
 }
 ```
 
