@@ -4,5 +4,5 @@
 cd ..
 
 # Call bintrayUpload task
-./gradlew bintrayUpload
+./gradlew :ok2curl:bintrayUpload
 

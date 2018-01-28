@@ -3,12 +3,17 @@ jdk:
   - oraclejdk8
 android:
   components:
+    - tools
+    - platform-tools
     - build-tools-27.0.3
     - android-27
     - extra-android-m2repository
 
   licenses:
     - android-sdk-license-.+
+
+before_script:
+    - yes | sdkmanager "platforms;android-27"
 
 script:
     - ./gradlew clean test
