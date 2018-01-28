@@ -1,8 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
 
 group='com.github.mrmike'
-version='0.4.0'
+version='0.4.1'
 
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
@@ -15,17 +17,62 @@ dependencies {
     testCompile 'com.squareup.okhttp3:mockwebserver:3.9.1'
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'jar'
+                groupId 'com.github.mrmike'
+                artifactId 'ok2curl'
+
+                name 'Ok2Curl'
+                description 'Convert OkHttp requests into curl logs.'
+                url 'https://github.com/mrmike/Ok2Curl'
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'mrmike'
+                        name 'Michał Moczulski'
+                        email 'moczul@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/mrmike/Ok2Curl.git'
+                    developerConnection 'https://github.com/mrmike/Ok2Curl.git'
+                    url 'https://github.com/mrmike/Ok2Curl'
+
+                }
+            }
+        }
+    }
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
 
-artifacts {
-    archives sourcesJar
-    archives javadocJar
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'ok2curl'
+        desc = 'Convert OkHttp requests into curl logs.'
+        websiteUrl = 'https://github.com/mrmike/Ok2Curl'
+        vcsUrl = 'https://github.com/mrmike/Ok2Curl.git'
+        licenses = ["Apache-2.0"]
+        publish = true
+        publicDownloadNumbers = false
+        version {
+            desc = 'Convert OkHttp requests into curl logs.'
+            gpg {
+                sign = true
+                passphrase = System.getenv("BINTRAY_GPG_PASS")
+            }
+        }
+    }
 }
