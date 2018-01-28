@@ -10,7 +10,6 @@ repositories {
 }
 
 dependencies {
-    // or use specific version
     compile 'com.github.mrmike:Ok2Curl:0.4.3'
 }
 ```
