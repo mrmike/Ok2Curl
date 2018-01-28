@@ -16,12 +16,10 @@ before_script:
     - yes | sdkmanager "platforms;android-27"
 
 script:
-    - ./gradlew clean test
-    - ./gradlew clean assemble
+    - ./gradlew clean build
 
 deploy:
     - provider: script
       script: scripts/deploy.sh
       on:
-        # switch to master
-        all_branches: true
+        branch: master
