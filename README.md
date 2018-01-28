@@ -3,7 +3,7 @@
 Convert OkHttp requests into curl logs.
 
 ## Usage
-Add library to project dependencies.
+Add library to project dependencies. Library is available on jcenter repository.
 ```groovy
 repositories {
     jcenter()
@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // or use specific version
-    compile 'com.github.mrmike:Ok2Curl:0.4.2'
+    compile 'com.github.mrmike:Ok2Curl:0.4.3'
 }
 ```
 

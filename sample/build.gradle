@@ -34,14 +34,14 @@ dependencies {
     implementation project(':ok2curl')
 
     /**
-     * implementation 'com.github.mrmike:ok2curl:0.4.2'
+     * implementation 'com.github.mrmike:ok2curl:0.4.3'
      */
 
     /**
      * Ok2Curl is packed with the latest version of OkHttp. If you already have OkHttp declared in
      * your dependencies or want to use different version simply add exclude module.
      *
-     * implementation ('com.github.mrmike:ok2curl:0.4.1') {
+     * implementation ('com.github.mrmike:ok2curl:0.4.3') {
      *      exclude module: 'okhttp'
      * }
      */
