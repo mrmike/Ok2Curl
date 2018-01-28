@@ -13,3 +13,10 @@ android:
 script:
     - ./gradlew clean test
     - ./gradlew clean assemble
+
+deploy:
+    - provider: script
+      script: scripts/deploy.sh
+      on:
+        # switch to master
+        all_branches: true
