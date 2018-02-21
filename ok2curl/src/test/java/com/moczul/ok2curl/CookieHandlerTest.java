@@ -87,7 +87,7 @@ public class CookieHandlerTest {
 
         okHttpClient.newCall(request).execute();
 
-        final String expectedCurl = "curl -X GET " + url;
+        final String expectedCurl = String.format("curl -X GET \"%s\"",  url);
         verify(logger).log(expectedCurl);
     }
 
