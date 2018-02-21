@@ -52,7 +52,7 @@ public class HeaderModifierTest {
         final List<HeaderModifier> modifiers = Collections.singletonList(cookieHeaderModifier);
         final String command = new CurlBuilder(request, -1L, modifiers, Options.EMPTY).build();
 
-        assertEquals("curl -X GET -H \"Cookie:modifiedCookieValue\" http://example.com/", command);
+        assertEquals("curl -X GET -H \"Cookie:modifiedCookieValue\" \"http://example.com/\"", command);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class HeaderModifierTest {
 
         final String command = new CurlBuilder(request, -1L, modifiers, Options.EMPTY).build();
 
-        assertEquals("curl -X GET -H \"Accept:application/json\" http://example.com/", command);
+        assertEquals("curl -X GET -H \"Accept:application/json\" \"http://example.com/\"", command);
     }
 
     @Test
@@ -79,6 +79,6 @@ public class HeaderModifierTest {
         final List<HeaderModifier> modifiers = Collections.singletonList(nullHeaderModifier);
         final String command = new CurlBuilder(request, -1L, modifiers, Options.EMPTY).build();
 
-        assertEquals(command, "curl -X GET http://example.com/", command);
+        assertEquals(command, "curl -X GET \"http://example.com/\"", command);
     }
 }
