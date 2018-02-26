@@ -3,10 +3,10 @@
 Convert OkHttp requests into curl logs.
 
 ## Usage
-Add library to project dependencies. Library is available on jcenter repository.
+Add library to project dependencies.
 ```groovy
 repositories {
-    jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
