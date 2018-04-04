@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.mrmike:Ok2Curl:0.4.5'
+    implementation 'com.github.mrmike:ok2curl:0.4.5'
 }
 ```
 
