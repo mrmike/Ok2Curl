@@ -38,9 +38,7 @@ public class RequestService extends IntentService {
         final Request request = RequestFactory.getRequest(requestType);
 
         try {
-            /**
-             * This call will be logged via logcat
-             */
+            // This call will be logged via logcat
             client.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
