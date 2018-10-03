@@ -45,7 +45,7 @@ public class OptionsTest {
     }
 
     @Test
-    public void shouldIgnoreDuplicatedParameteres() {
+    public void shouldIgnoreDuplicatedParameters() {
         final Options options = Options.builder()
                 .insecure()
                 .insecure()

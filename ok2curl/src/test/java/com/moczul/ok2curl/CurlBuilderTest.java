@@ -93,7 +93,7 @@ public class CurlBuilderTest {
         final Request request = new Request.Builder().url("http://example.com/").build();
         final Options options = Options.builder().insecure().build();
 
-        final String command = new CurlBuilder(request, 1024, Collections.<HeaderModifier>emptyList(), options).build();
+        final String command = new CurlBuilder(request, 1024, Collections.emptyList(), options).build();
 
         assertEquals("curl --insecure -X GET \"http://example.com/\"", command);
     }

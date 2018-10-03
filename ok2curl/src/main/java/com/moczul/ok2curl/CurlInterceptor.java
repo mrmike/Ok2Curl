@@ -29,7 +29,7 @@ public class CurlInterceptor implements Interceptor {
      * @param logger output of logging
      */
     public CurlInterceptor(Loggable logger) {
-        this(logger, DEFAULT_LIMIT, Collections.<HeaderModifier>emptyList(), Options.EMPTY);
+        this(logger, DEFAULT_LIMIT, Collections.emptyList(), Options.EMPTY);
     }
 
     /**
@@ -41,7 +41,7 @@ public class CurlInterceptor implements Interceptor {
      * @param options list of curl options
      */
     public CurlInterceptor(Loggable logger, Options options) {
-        this(logger, DEFAULT_LIMIT, Collections.<HeaderModifier>emptyList(), options);
+        this(logger, DEFAULT_LIMIT, Collections.emptyList(), options);
     }
 
     /**
@@ -61,7 +61,7 @@ public class CurlInterceptor implements Interceptor {
      * @param limit limit maximal bytes logged, if negative - non limited
      */
     public CurlInterceptor(Loggable logger, long limit) {
-        this(logger, limit, Collections.<HeaderModifier>emptyList(), Options.EMPTY);
+        this(logger, limit, Collections.emptyList(), Options.EMPTY);
     }
 
     /**
