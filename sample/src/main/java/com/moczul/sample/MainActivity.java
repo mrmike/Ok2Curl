@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void displayCurlLog(String type) {
         final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
-        final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList(modifier);
+        final List<HeaderModifier> modifiers = Collections.singletonList(modifier);
 
         final String curl = new CurlBuilder(RequestFactory.getRequest(type), -1L, modifiers, Options.EMPTY).build();
         curlLog.setText(curl);

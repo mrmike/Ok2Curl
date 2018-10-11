@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Options {
 
-    public static final Options EMPTY = new Options(Collections.<String>emptyList());
+    public static final Options EMPTY = new Options(Collections.emptyList());
 
     private final List<String> options;
 

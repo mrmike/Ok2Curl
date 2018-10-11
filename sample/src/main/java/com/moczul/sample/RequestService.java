@@ -26,7 +26,7 @@ public class RequestService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
-        final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList(modifier);
+        final List<HeaderModifier> modifiers = Collections.singletonList(modifier);
 
         final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger(), modifiers);
 
@@ -38,9 +38,7 @@ public class RequestService extends IntentService {
         final Request request = RequestFactory.getRequest(requestType);
 
         try {
-            /**
-             * This call will be logged via logcat
-             */
+            // This call will be logged via logcat
             client.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();

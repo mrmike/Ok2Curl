@@ -8,13 +8,13 @@ import com.moczul.ok2curl.Header;
 public interface HeaderModifier {
 
     /**
-     * @param header
+     * @param header the header to check
      * @return true if header should be modified and false otherwise.
      */
     boolean matches(Header header);
 
     /**
-     * @param header
+     * @param header the header to modify
      * @return modified header or null to omit header in curl log
      */
     Header modify(Header header);

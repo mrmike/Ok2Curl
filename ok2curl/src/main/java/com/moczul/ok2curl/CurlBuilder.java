@@ -35,7 +35,7 @@ public class CurlBuilder {
     private List<Header> headers = new LinkedList<>();
 
     public CurlBuilder(Request request) {
-        this(request, -1L, Collections.<HeaderModifier>emptyList(), Options.EMPTY);
+        this(request, -1L, Collections.emptyList(), Options.EMPTY);
     }
 
     public CurlBuilder(Request request, long limit, List<HeaderModifier> headerModifiers, Options options) {
