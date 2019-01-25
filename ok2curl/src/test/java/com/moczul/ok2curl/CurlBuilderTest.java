@@ -108,6 +108,15 @@ public class CurlBuilderTest {
         assertEquals("curl --connect-timeout 120 -X GET \"http://example.com/\"", command);
     }
 
+    @Test
+    public void getRequesWithDelimiter() {
+        final Request request = new Request.Builder().url("http://example.com/").build();
+
+        final String command = new CurlBuilder(request, -1L, Collections.emptyList(), Options.EMPTY, " \\\n").build();
+
+        assertEquals("curl \\\n-X GET \\\n\"http://example.com/\"", command);
+    }
+
     private RequestBody body() {
         return new FormBody.Builder().add("key1", "value1").build();
     }

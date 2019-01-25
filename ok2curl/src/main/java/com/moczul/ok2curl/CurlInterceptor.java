@@ -15,11 +15,13 @@ import okhttp3.Response;
 public class CurlInterceptor implements Interceptor {
 
     private static final long DEFAULT_LIMIT = 1024L * 1024L;
+    private static final String DEFAULT_DELIMITER = " ";
 
     private final Loggable logger;
     private final long limit;
     private final List<HeaderModifier> headerModifiers = new ArrayList<>();
     private final Options options;
+    private final String delimiter;
 
     /**
      * Interceptor responsible for printing curl logs
@@ -29,7 +31,7 @@ public class CurlInterceptor implements Interceptor {
      * @param logger output of logging
      */
     public CurlInterceptor(Loggable logger) {
-        this(logger, DEFAULT_LIMIT, Collections.emptyList(), Options.EMPTY);
+        this(logger, DEFAULT_LIMIT, Collections.emptyList(), Options.EMPTY, DEFAULT_DELIMITER);
     }
 
     /**
@@ -41,7 +43,7 @@ public class CurlInterceptor implements Interceptor {
      * @param options list of curl options
      */
     public CurlInterceptor(Loggable logger, Options options) {
-        this(logger, DEFAULT_LIMIT, Collections.emptyList(), options);
+        this(logger, DEFAULT_LIMIT, Collections.emptyList(), options, DEFAULT_DELIMITER);
     }
 
     /**
@@ -51,7 +53,7 @@ public class CurlInterceptor implements Interceptor {
      * @param headerModifiers list of header modifiers
      */
     public CurlInterceptor(Loggable logger, List<HeaderModifier> headerModifiers) {
-        this(logger, DEFAULT_LIMIT, headerModifiers, Options.EMPTY);
+        this(logger, DEFAULT_LIMIT, headerModifiers, Options.EMPTY, DEFAULT_DELIMITER);
     }
 
     /**
@@ -61,7 +63,7 @@ public class CurlInterceptor implements Interceptor {
      * @param limit limit maximal bytes logged, if negative - non limited
      */
     public CurlInterceptor(Loggable logger, long limit) {
-        this(logger, limit, Collections.emptyList(), Options.EMPTY);
+        this(logger, limit, Collections.emptyList(), Options.EMPTY, DEFAULT_DELIMITER);
     }
 
     /**
@@ -72,10 +74,23 @@ public class CurlInterceptor implements Interceptor {
      * @param options list of curl options
      */
     public CurlInterceptor(Loggable logger, long limit, List<HeaderModifier> headerModifiers, Options options) {
+        this(logger, limit, headerModifiers, options, DEFAULT_DELIMITER);
+    }
+
+    /**
+     *  Interceptor responsible for printing curl logs
+     * @param logger output of logging
+     * @param limit limit maximal bytes logged, if negative - non limited
+     * @param headerModifiers list of header modifiers
+     * @param options list of curl options
+     * @param delimiter string delimiter
+     */
+    public CurlInterceptor(Loggable logger, long limit, List<HeaderModifier> headerModifiers, Options options, String delimiter) {
         this.logger = logger;
         this.limit = limit;
         this.headerModifiers.addAll(headerModifiers);
         this.options = options;
+        this.delimiter = delimiter;
     }
 
     @Override
@@ -83,7 +98,7 @@ public class CurlInterceptor implements Interceptor {
         final Request request = chain.request();
 
         final Request copy = request.newBuilder().build();
-        final String curl = new CurlBuilder(copy, limit, headerModifiers, options).build();
+        final String curl = new CurlBuilder(copy, limit, headerModifiers, options, delimiter).build();
 
         logger.log(curl);
 

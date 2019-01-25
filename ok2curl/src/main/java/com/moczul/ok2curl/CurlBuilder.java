@@ -33,15 +33,21 @@ public class CurlBuilder {
     private String body;
     private List<String> options;
     private List<Header> headers = new LinkedList<>();
+    private String delimiter;
 
     public CurlBuilder(Request request) {
         this(request, -1L, Collections.emptyList(), Options.EMPTY);
     }
 
     public CurlBuilder(Request request, long limit, List<HeaderModifier> headerModifiers, Options options) {
+        this(request, limit, headerModifiers, options, " ");
+    }
+
+    public CurlBuilder(Request request, long limit, List<HeaderModifier> headerModifiers, Options options, String delimiter) {
         this.url = request.url().toString();
         this.method = request.method();
         this.options = new ArrayList<>(options.list());
+        this.delimiter = delimiter;
         final RequestBody body = request.body();
         if (body != null) {
             this.contentType = getContentType(body);
@@ -127,7 +133,7 @@ public class CurlBuilder {
 
         parts.add(String.format(FORMAT_URL, url));
 
-        return join(" ", parts);
+        return join(delimiter, parts);
     }
 
     private boolean containsName(String name, List<Header> headers) {
