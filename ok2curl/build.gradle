@@ -10,11 +10,11 @@ targetCompatibility = '1.8'
 sourceCompatibility = '1.8'
 
 dependencies {
-    compile 'com.squareup.okhttp3:okhttp:3.11.0'
+    compile 'com.squareup.okhttp3:okhttp:3.13.1'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.23.0'
-    testCompile 'com.squareup.okhttp3:mockwebserver:3.11.0'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.13.1'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
