@@ -21,19 +21,19 @@ import static com.moczul.ok2curl.StringUtil.join;
 
 public class CurlBuilder {
 
-    private static final String FORMAT_HEADER = "-H \"%1$s:%2$s\"";
-    private static final String FORMAT_METHOD = "-X %1$s";
-    private static final String FORMAT_BODY = "-d '%1$s'";
-    private static final String FORMAT_URL = "\"%1$s\"";
-    private static final String CONTENT_TYPE = "Content-Type";
+    protected static final String FORMAT_HEADER = "-H \"%1$s:%2$s\"";
+    protected static final String FORMAT_METHOD = "-X %1$s";
+    protected static final String FORMAT_BODY = "-d '%1$s'";
+    protected static final String FORMAT_URL = "\"%1$s\"";
+    protected static final String CONTENT_TYPE = "Content-Type";
 
-    private final String url;
-    private String method;
-    private String contentType;
-    private String body;
-    private List<String> options;
-    private List<Header> headers = new LinkedList<>();
-    private String delimiter;
+    protected final String url;
+    protected final String method;
+    protected final String contentType;
+    protected final String body;
+    protected final List<String> options;
+    protected final List<Header> headers;
+    protected final String delimiter;
 
     public CurlBuilder(Request request) {
         this(request, -1L, Collections.emptyList(), Options.EMPTY);
@@ -46,22 +46,27 @@ public class CurlBuilder {
     public CurlBuilder(Request request, long limit, List<HeaderModifier> headerModifiers, Options options, String delimiter) {
         this.url = request.url().toString();
         this.method = request.method();
-        this.options = new ArrayList<>(options.list());
+        this.options = Collections.unmodifiableList(options.list());
         this.delimiter = delimiter;
         final RequestBody body = request.body();
         if (body != null) {
             this.contentType = getContentType(body);
             this.body = getBodyAsString(body, limit);
+        } else {
+            this.contentType = null;
+            this.body = null;
         }
 
         final Headers headers = request.headers();
+        final List<Header> modifiableHeaders = new LinkedList<>();
         for (int i = 0; i < headers.size(); i++) {
             final Header header = new Header(headers.name(i), headers.value(i));
             final Header modifiedHeader = modifyHeader(header, headerModifiers);
             if (modifiedHeader != null) {
-                this.headers.add(modifiedHeader);
+                modifiableHeaders.add(modifiedHeader);
             }
         }
+        this.headers = Collections.unmodifiableList(modifiableHeaders);
     }
 
     private Header modifyHeader(Header header, List<HeaderModifier> headerModifiers) {
@@ -136,7 +141,7 @@ public class CurlBuilder {
         return join(delimiter, parts);
     }
 
-    private boolean containsName(String name, List<Header> headers) {
+    protected boolean containsName(String name, List<Header> headers) {
         for (Header header : headers) {
             if (header.name().equals(name)) {
                 return true;
