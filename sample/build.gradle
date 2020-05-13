@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.moczul.sample"
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -32,19 +32,20 @@ dependencies {
     implementation project(':ok2curl')
 
     /**
-     * implementation 'com.github.mrmike:ok2curl:0.5.0'
+     * implementation 'com.github.mrmike:ok2curl:0.6.0'
      */
 
     /**
      * Ok2Curl is packed with the latest version of OkHttp. If you already have OkHttp declared in
      * your dependencies or want to use different version simply add exclude module.
      *
-     * implementation ('com.github.mrmike:ok2curl:0.5.0') {
+     * implementation ('com.github.mrmike:ok2curl:0.6.0') {
      *      exclude module: 'okhttp'
      * }
      */
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.6.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.23.0'
