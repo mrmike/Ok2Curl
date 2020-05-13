@@ -9,9 +9,6 @@ android:
     - android-29
     - extra-android-m2repository
 
-  licenses:
-    - android-sdk-license-.+
-
 before_script:
     - yes | sdkmanager "platforms;android-29"
 
