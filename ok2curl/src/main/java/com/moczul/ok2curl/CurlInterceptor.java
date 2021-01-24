@@ -17,11 +17,11 @@ public class CurlInterceptor implements Interceptor {
     private static final long DEFAULT_LIMIT = 1024L * 1024L;
     private static final String DEFAULT_DELIMITER = " ";
 
-    private final Loggable logger;
-    private final long limit;
-    private final List<HeaderModifier> headerModifiers = new ArrayList<>();
-    private final Options options;
-    private final String delimiter;
+    protected final Loggable logger;
+    protected final long limit;
+    protected final List<HeaderModifier> headerModifiers = new ArrayList<>();
+    protected final Options options;
+    protected final String delimiter;
 
     /**
      * Interceptor responsible for printing curl logs
@@ -98,10 +98,14 @@ public class CurlInterceptor implements Interceptor {
         final Request request = chain.request();
 
         final Request copy = request.newBuilder().build();
-        final String curl = new CurlBuilder(copy, limit, headerModifiers, options, delimiter).build();
+        final String curl = getCurlBuilder(copy).build();
 
         logger.log(curl);
 
         return chain.proceed(request);
+    }
+
+    protected CurlBuilder getCurlBuilder(Request copy) {
+        return new CurlBuilder(copy, limit, headerModifiers, options, delimiter);
     }
 }

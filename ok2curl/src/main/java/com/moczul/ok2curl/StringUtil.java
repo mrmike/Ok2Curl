@@ -1,6 +1,6 @@
 package com.moczul.ok2curl;
 
-/* package */ class StringUtil {
+public class StringUtil {
 
     /**
      * Returns a string containing the tokens joined by delimiters.
