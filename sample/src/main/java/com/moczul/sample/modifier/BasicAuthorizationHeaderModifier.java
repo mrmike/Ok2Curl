@@ -13,14 +13,14 @@ public class BasicAuthorizationHeaderModifier implements HeaderModifier {
 
     @Override
     public boolean matches(Header header) {
-        return "Authorization".equals(header.name())
-                && header.value().startsWith("Basic");
+        return "Authorization".equals(header.getName())
+                && header.getValue().startsWith("Basic");
     }
 
     @Override
     public Header modify(Header header) {
-        final String valueToDecode = header.value().replace("Basic", "").trim();
+        final String valueToDecode = header.getValue().replace("Basic", "").trim();
         final String decodedHeaderValue = base64Decoder.decode(valueToDecode);
-        return new Header(header.name(), decodedHeaderValue);
+        return new Header(header.getName(), decodedHeaderValue);
     }
 }

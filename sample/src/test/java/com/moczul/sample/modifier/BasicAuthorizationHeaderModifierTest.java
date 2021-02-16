@@ -39,7 +39,7 @@ public class BasicAuthorizationHeaderModifierTest {
 
         final Header modifiedHeader = headerModifier.modify(basicAuthHeader);
 
-        assertThat(modifiedHeader.name(), is("Authorization"));
-        assertThat(modifiedHeader.value(), is("maciej:tajnehaslo123"));
+        assertThat(modifiedHeader.getName(), is("Authorization"));
+        assertThat(modifiedHeader.getValue(), is("maciej:tajnehaslo123"));
     }
 }

@@ -2,12 +2,13 @@ package com.moczul.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.moczul.ok2curl.CurlBuilder;
-import com.moczul.ok2curl.Options;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.moczul.ok2curl.Configuration;
+import com.moczul.ok2curl.CurlGenerator;
 import com.moczul.ok2curl.modifier.HeaderModifier;
 import com.moczul.sample.modifier.Base64Decoder;
 import com.moczul.sample.modifier.BasicAuthorizationHeaderModifier;
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
         final List<HeaderModifier> modifiers = Collections.singletonList(modifier);
 
-        final String curl = new CurlBuilder(RequestFactory.getRequest(type), -1L, modifiers, Options.EMPTY).build();
+        final CurlGenerator curlGenerator = new CurlGenerator(new Configuration(modifiers));
+        final String curl = curlGenerator.generateCommand(RequestFactory.getRequest(type));
         curlLog.setText(curl);
     }
 

@@ -1,34 +1,31 @@
 package com.moczul.sample;
 
-import android.app.IntentService;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
+
+import com.moczul.ok2curl.Configuration;
 import com.moczul.ok2curl.CurlInterceptor;
-import com.moczul.ok2curl.modifier.HeaderModifier;
 import com.moczul.sample.modifier.Base64Decoder;
 import com.moczul.sample.modifier.BasicAuthorizationHeaderModifier;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public class RequestService extends IntentService {
+public class RequestService extends JobIntentService {
 
     public static final String REQUEST_TYPE = "request_type";
 
-    public RequestService() {
-        super("RequestService");
-    }
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleWork(@NonNull Intent intent) {
         final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
-        final List<HeaderModifier> modifiers = Collections.singletonList(modifier);
+        final Configuration config = new Configuration(Collections.singletonList(modifier));
 
-        final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger(), modifiers);
+        final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger(), config);
 
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(curlInterceptor)
