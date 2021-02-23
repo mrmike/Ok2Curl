@@ -10,9 +10,8 @@ sealed class CommandComponent {
     object Url : CommandComponent()
 
     companion object {
-        internal val DEFAULT = listOf(Curl, Flags, Method, Header, Body, Url)
-
-        fun defaultList() = DEFAULT
+        @JvmField
+        val DEFAULT = listOf(Curl, Flags, Method, Header, Body, Url)
     }
 }
 
