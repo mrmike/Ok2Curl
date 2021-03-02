@@ -1,9 +1,9 @@
 # Ok2Curl [![Build Status](https://travis-ci.org/mrmike/Ok2Curl.svg)](https://travis-ci.org/mrmike/Ok2Curl) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Ok2Curl-green.svg?style=flat)](https://android-arsenal.com/details/1/2653) [![Release](https://jitpack.io/v/mrmike/Ok2Curl.svg)](https://jitpack.io/#mrmike/Ok2Curl)
 
-Convert OkHttp requests into curl logs.
+Simply way to transform OkHttp requests into curl logs.
 
 ## Usage
-Add library to project dependencies. Library is hosted on jcenter.
+Add library to project dependencies. The library is hosted on jcenter.
 ```groovy
 repositories {
     jcenter()
@@ -15,55 +15,83 @@ dependencies {
 ```
 
 To start logging requests with Ok2Curl add interceptor to OkHttp client.
-```java
-OkHttpClient okHttp = new OkHttpClient.Builder()
-    .addInterceptor(new CurlInterceptor(new Loggable() {
-            @Override
-            public void log(String message) {
-                Log.v("Ok2Curl", message);
-            }
-        }))
-    .build();
+```kotlin
+val client = OkHttpClient.Builder()
+            .addInterceptor(CurlInterceptor(AndroidLogger()))
+            .build()
 ```
 
 ## Result
-With Ok2Curl set up correctly every executed request will be transformed into curl log e.g.
+With Ok2Curl set up correctly, every executed request will be transformed into curl log e.g.
 ```shell
 adb logcat -s "Ok2Curl"
 curl -X GET -H "Cache-Control:max-stale=2147483647, only-if-cached" https://api.github.com/repos/vmg/redcarpet/issues?state=closed
 ```
 
 ## Network interceptors
-By default Ok2Curl uses application interceptors from OkHttp which is adequate for most cases. But sometimes you may want to use network interceptor e.g. to log Cookies set via [CookieHandler](http://docs.oracle.com/javase/6/docs/api/java/net/CookieHandler.html). In such a case add interceptor the same way as below:  
+By default, Ok2Curl uses application interceptors from OkHttp which is adequate for most cases. But sometimes you may want to use a network interceptor e.g. to log Cookies set via [CookieHandler](https://developer.android.com/reference/java/net/CookieHandler). In such case add interceptor the same way as below:  
 
-```
-OkHttpClient okHttp = new OkHttpClient.Builder()
-    .addNetworkInterceptor(new CurlInterceptor())
-    .build();
+```kotlin
+val client = OkHttpClient.Builder()
+            .addNetworkInterceptor(CurlInterceptor(AndroidLogger()))
+            .build()
 ```
 
-To get know more about Interceptor in OkHttp take a look here: https://github.com/square/okhttp/wiki/Interceptors
+To get know more about Interceptor in OkHttp take a look [here](https://square.github.io/okhttp/interceptors/).
+
+## Configuration
+
+`CurlInterceptor` accepts an optional configuration object. With `Configuration` you can specify various options like:
+* header modifiers - custom logic for modifying header values
+* components - list of required command components
+* flags - optional curl flags
+* limit - bytes limit for body
+* delimiter for command components 
+
+```kotlin
+class Configuration(
+    val headerModifiers: List<HeaderModifier> = emptyList(),
+    val components: List<CommandComponent> = CommandComponent.DEFAULT,
+    val flags: Flags = Flags.EMPTY,
+    val limit: Long = 1024L * 1024L,
+    val delimiter: String = " "
+)
+```
 
 ## Header modifiers
-Ok2Curl allows you to modify any header before creating curl command. All you have to do is create your own modifier that implements [HeaderModifier](https://github.com/mrmike/Ok2Curl/blob/master/ok2curl/src/main/java/com/moczul/ok2curl/modifier/HeaderModifier.java)
-and add this modifier to CurlInterceptor. See [sample](https://github.com/mrmike/Ok2Curl/blob/master/sample/src/main/java/com/moczul/sample/RequestService.java) for reference.
+Ok2Curl allows you to modify any header before creating curl command. All you have to do is create your own modifier that implements [HeaderModifier](https://github.com/mrmike/Ok2Curl/blob/master/ok2curl/src/main/java/com/moczul/ok2curl/modifier/HeaderModifier.kt)
+and add this modifier to CurlInterceptor. See [sample](https://github.com/mrmike/Ok2Curl/blob/master/sample/src/main/java/com/moczul/sample/RequestService.kt) for reference.
 ```
-final BasicAuthorizationHeaderModifier modifier = new BasicAuthorizationHeaderModifier(new Base64Decoder());
-final List<HeaderModifier> modifiers = Collections.<HeaderModifier>singletonList(modifier);
-
-final CurlInterceptor curlInterceptor = new CurlInterceptor(new AndroidLogger(), modifiers);
+val modifier = BasicAuthorizationHeaderModifier(Base64Decoder())
+val configuration = Configuration(headerModifiers = listOf(modifier))
+val curlInterceptor = CurlInterceptor(AndroidLogger(), configuration)
 ```
 
-## Options
-Ok2Curl supports basic Curl options. In order to use options use the following code:
+## Command Components
+With Ok2Curl configuration you can specify a list of components for curl command. For instance,
+you can skip header, body, and flag components. 
+```kotlin
+val components = listOf(Curl, Method, Url)
+val configuration = Configuration(components = components)
+val curlInterceptor = CurlInterceptor(AndroidLogger(), configuration)
 ```
-final Options options = Options.builder()
-                .insecure()
-                .connectTimeout(120)
-                .retry(5)
-                .build();
 
-final CurlInterceptor interceptor = new CurlInterceptor(logger, options);
+As a result, CurlInterceptor will receive given simplified command
+```shell
+// Headers, body and flags are skipped
+curl -X GET https://api.github.com/repos/vmg/redcarpet/issues?state=closed
+```
+
+## Flags
+Ok2Curl supports basic Curl options. To use options use the following code:
+```kotlin
+val flags = Flags.builder()
+            .insecure()
+            .connectTimeout(seconds = 120)
+            .retry(5)
+            .build()
+val configuration = Configuration(flags = flags)
+val curlInterceptor = CurlInterceptor(AndroidLogger(), configuration)
 ```
 Since now every Curl command will start with `curl --insecure --connect-timeout 120 --retry 5...`
 
@@ -75,13 +103,13 @@ Since now every Curl command will start with `curl --insecure --connect-timeout 
 * --compressed
 * --location
 
-If would like to support any new options please feel free to open PR. Full list of curl options is
+If would like to support any new options please feel free to open PR. A full list of curl options is
 available [here](https://curl.haxx.se/docs/manpage.html).
 
 
 ## License
 
-    Copyright 2018 Michał Moczulski
+    Copyright 2021 Michał Moczulski
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
