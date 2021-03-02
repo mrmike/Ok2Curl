@@ -4,7 +4,7 @@ on:
   push:
     branches: [ $default-branch ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: *
 
 jobs:
   build:
