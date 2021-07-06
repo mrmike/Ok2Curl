@@ -16,11 +16,6 @@ artifacts {
     archives javadocJar
 }
 
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
 
