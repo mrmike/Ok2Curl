@@ -1,4 +1,5 @@
 #!/bin/sh
 
-# Call bintrayUpload task
-./gradlew :ok2curl:bintrayUpload
+./gradlew clean ok2curl:build
+./gradlew ok2curl:publishReleasePublicationToSonatypeRepository
+./gradlew closeAndReleaseSonatypeStagingRepository

@@ -3,10 +3,10 @@
 Convert OkHttp requests into curl logs.
 
 ## Usage
-Add library to project dependencies. Library is hosted on jcenter.
+Add library to project dependencies. Library is hosted on Maven Central.
 ```groovy
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
