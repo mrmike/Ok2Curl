@@ -1,10 +1,9 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 ext {
     PUBLISH_GROUP_ID = 'com.github.mrmike'
-    PUBLISH_VERSION = '0.7.0'
+    PUBLISH_VERSION = '0.8.0-alpha'
     PUBLISH_ARTIFACT_ID = 'ok2curl'
 }
 
@@ -14,9 +13,9 @@ targetCompatibility = '1.8'
 sourceCompatibility = '1.8'
 
 dependencies {
-    implementation 'com.squareup.okhttp3:okhttp:4.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:2.23.0'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:4.2.0'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.3'
 }
