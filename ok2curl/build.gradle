@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 
 ext {
     PUBLISH_GROUP_ID = 'com.github.mrmike'
-    PUBLISH_VERSION = '0.7.0'
+    PUBLISH_VERSION = '0.8.0-alpha'
     PUBLISH_ARTIFACT_ID = 'ok2curl'
 }
 
