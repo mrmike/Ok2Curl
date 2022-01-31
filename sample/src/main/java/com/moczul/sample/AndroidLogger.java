@@ -2,14 +2,16 @@ package com.moczul.sample;
 
 import android.util.Log;
 
-import com.moczul.ok2curl.logger.Loggable;
+import androidx.annotation.NonNull;
 
-public class AndroidLogger implements Loggable {
+import com.moczul.ok2curl.logger.Logger;
+
+public class AndroidLogger implements Logger {
 
     public static final String TAG = "Ok2Curl";
 
     @Override
-    public void log(String message) {
+    public void log(@NonNull String message) {
         Log.v(TAG, message);
     }
 }
