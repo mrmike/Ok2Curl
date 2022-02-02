@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sample</string>
+    <string name="app_name">Ok2Curl Sample</string>
     <string name="sample_get_request">Sample GET request</string>
     <string name="sample_post_request">Sample POST request</string>
     <string name="modified_get_request">Get request with modified header</string>
