@@ -14,7 +14,7 @@ class LimitedSink(limited: Buffer, limit: Long) : Sink {
     init {
         require(limit > 0) { "limit has to be grater than 0" }
         this.limited = limited
-        total = limit
+        this.total = limit
     }
 
     @Throws(IOException::class)

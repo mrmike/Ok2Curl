@@ -24,10 +24,10 @@ class CurlCommandGenerator(private val configuration: Configuration) {
         request: Request
     ): List<String> {
         return when (commandComponent) {
-            CommandComponent.Curl -> listOf("curl")
-            CommandComponent.Url -> generateUrl(request.url)
-            CommandComponent.Flags -> generateFlags()
-            CommandComponent.Body -> generateBody(request.body)
+            CommandComponent.Curl   -> listOf("curl")
+            CommandComponent.Url    -> generateUrl(request.url)
+            CommandComponent.Flags  -> generateFlags()
+            CommandComponent.Body   -> generateBody(request.body)
             CommandComponent.Method -> generateMethod(request.method)
             CommandComponent.Header -> generateHeaders(request.headers, request.body)
         }

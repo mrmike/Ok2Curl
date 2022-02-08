@@ -1,15 +1,13 @@
 package com.moczul.ok2curl
 
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashSet
+import java.util.Locale
 
 class Flags private constructor(options: Collection<String>) {
 
     private val options: List<String>
 
     init {
-        this.options = ArrayList(options)
+        this.options = options.toList()
     }
 
     fun list(): List<String> {
@@ -17,7 +15,7 @@ class Flags private constructor(options: Collection<String>) {
     }
 
     class Builder {
-        private val options: MutableSet<String> = HashSet()
+        private val options: MutableSet<String> = mutableSetOf()
         fun insecure(): Builder {
             options.add("--insecure")
             return this
@@ -48,9 +46,7 @@ class Flags private constructor(options: Collection<String>) {
             return this
         }
 
-        fun build(): Flags {
-            return Flags(options)
-        }
+        fun build() = Flags(options)
     }
 
     companion object {
@@ -58,8 +54,6 @@ class Flags private constructor(options: Collection<String>) {
         val EMPTY = Flags(emptyList())
 
         @JvmStatic
-        fun builder(): Builder {
-            return Builder()
-        }
+        fun builder() = Builder()
     }
 }

@@ -1,9 +1,8 @@
-package com.moczul.ok2curl.util
+package com.moczul.ok2curl
 
-import com.moczul.ok2curl.Flags
 import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.hasItem
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class FlagsTest {
@@ -27,10 +26,8 @@ class FlagsTest {
             .build()
 
         // then
-        assertThat(flags.list().size, `is`(3))
-        assertThat<List<String?>>(flags.list(), hasItem("--max-time 120"))
-        assertThat<List<String?>>(flags.list(), hasItem("--connect-timeout 60"))
-        assertThat<List<String?>>(flags.list(), hasItem("--retry 3"))
+        val expectedFlags = listOf("--max-time 120", "--connect-timeout 60", "--retry 3")
+        assertEquals(expectedFlags, flags.list())
     }
 
     @Test
@@ -43,10 +40,8 @@ class FlagsTest {
             .build()
 
         // then
-        assertThat(flags.list().size, `is`(3))
-        assertThat<List<String?>>(flags.list(), hasItem("--insecure"))
-        assertThat<List<String?>>(flags.list(), hasItem("--compressed"))
-        assertThat<List<String?>>(flags.list(), hasItem("--location"))
+        val expectedFlags = listOf("--insecure", "--compressed", "--location")
+        assertEquals(expectedFlags, flags.list())
     }
 
     @Test
@@ -59,7 +54,6 @@ class FlagsTest {
             .build()
 
         // then
-        assertThat(flags.list().size, `is`(1))
-        assertThat<List<String?>>(flags.list(), hasItem("--insecure"))
+        assertEquals(listOf("--insecure"), flags.list())
     }
 }

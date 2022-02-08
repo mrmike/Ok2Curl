@@ -1,4 +1,5 @@
-import com.moczul.ok2curl.CurlInterceptor
+package com.moczul.ok2curl
+
 import com.moczul.ok2curl.logger.Logger
 import okhttp3.Cookie
 import okhttp3.CookieJar

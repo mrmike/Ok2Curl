@@ -1,9 +1,5 @@
-package com.moczul.ok2curl.util
+package com.moczul.ok2curl
 
-import com.moczul.ok2curl.CommandComponent
-import com.moczul.ok2curl.Configuration
-import com.moczul.ok2curl.CurlCommandGenerator
-import com.moczul.ok2curl.Flags
 import okhttp3.CacheControl
 import okhttp3.FormBody
 import okhttp3.Request
@@ -182,9 +178,9 @@ class CurlCommandGeneratorTest {
     }
 
     private companion object {
-        private fun body() = FormBody.Builder().add("key1", "value1").build()
+        fun body() = FormBody.Builder().add("key1", "value1").build()
 
-        private fun oneDayCache() =
+        fun oneDayCache() =
             CacheControl.Builder().maxAge(1, TimeUnit.DAYS).onlyIfCached().build()
     }
 }

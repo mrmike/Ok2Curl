@@ -15,7 +15,6 @@ class CurlInterceptor @JvmOverloads constructor(
         val request = chain.request()
 
         val curl = curlGenerator.generate(request)
-
         logger.log(curl)
 
         return chain.proceed(request)

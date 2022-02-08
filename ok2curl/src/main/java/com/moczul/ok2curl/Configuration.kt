@@ -1,6 +1,5 @@
 package com.moczul.ok2curl
 
-
 import com.moczul.ok2curl.modifier.HeaderModifier
 
 class Configuration @JvmOverloads constructor(
