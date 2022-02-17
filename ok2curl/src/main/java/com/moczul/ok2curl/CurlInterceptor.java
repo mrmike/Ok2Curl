@@ -97,10 +97,12 @@ public class CurlInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         final Request request = chain.request();
 
-        final Request copy = request.newBuilder().build();
-        final String curl = getCurlBuilder(copy).build();
+        if (logger.isEnable()) {
+            final Request copy = request.newBuilder().build();
+            final String curl = getCurlBuilder(copy).build();
 
-        logger.log(curl);
+            logger.log(curl);
+        }
 
         return chain.proceed(request);
     }

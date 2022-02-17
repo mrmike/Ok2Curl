@@ -9,6 +9,11 @@ public class AndroidLogger implements Loggable {
     public static final String TAG = "Ok2Curl";
 
     @Override
+    public boolean isEnable() {
+        return true;
+    }
+
+    @Override
     public void log(String message) {
         Log.v(TAG, message);
     }
