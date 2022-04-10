@@ -1,9 +1,9 @@
-apply plugin: 'java'
+apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
 
 ext {
     PUBLISH_GROUP_ID = 'com.github.mrmike'
-    PUBLISH_VERSION = '0.7.1'
+    PUBLISH_VERSION = '0.8.0'
     PUBLISH_ARTIFACT_ID = 'ok2curl'
 }
 
@@ -12,8 +12,20 @@ apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 targetCompatibility = '1.8'
 sourceCompatibility = '1.8'
 
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:2.23.0'
