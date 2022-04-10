@@ -6,7 +6,7 @@ import okio.Timeout
 import java.io.IOException
 import kotlin.math.min
 
-class LimitedSink(limited: Buffer, limit: Long) : Sink {
+internal class LimitedSink(limited: Buffer, limit: Long) : Sink {
 
     private val limited: Buffer
     private var total: Long
