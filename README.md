@@ -2,6 +2,9 @@
 
 Simply way to transform OkHttp requests into curl logs.
 
+## Supported OkHttp versions
+Currently Ok2Curl requires OkHttp in version 4.x.
+
 ## Usage
 Add library to project dependencies. Library is hosted on Maven Central.
 ```groovy
